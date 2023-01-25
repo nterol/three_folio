@@ -20,6 +20,7 @@ function getPages() {
 }
 
 export default defineConfig({
+  server: { open: true },
   build: {
     rollupOptions: {
       input: {
