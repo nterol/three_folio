@@ -10,7 +10,7 @@ import * as dat from "lil-gui";
 const gui = new dat.GUI();
 
 // Canvas
-const canvas = document.querySelector("canvas.webgl");
+const canvas = document.querySelector("canvas.webgl") ?? undefined;
 
 // Scene
 const scene = new T.Scene();
@@ -295,7 +295,7 @@ camera.position.z = 5;
 scene.add(camera);
 
 // Controls
-const controls = new OrbitControls(camera, canvas);
+const controls = new OrbitControls(camera, canvas as HTMLElement | undefined);
 controls.enableDamping = true;
 
 /**
