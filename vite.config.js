@@ -15,12 +15,13 @@ function getPages() {
     pages.map((page) => [page, resolve(__dirname, `${page}/index.html`)])
   );
 
-  console.log({ pageConfig });
   return pageConfig;
 }
 
 export default defineConfig({
   server: { open: true },
+
+  clearScreen: false,
   build: {
     rollupOptions: {
       input: {

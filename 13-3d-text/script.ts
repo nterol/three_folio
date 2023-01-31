@@ -22,7 +22,7 @@ import * as dat from "lil-gui";
 const gui = new dat.GUI();
 
 // Canvas
-const canvas = document.querySelector("canvas.webgl");
+const canvas = document.querySelector("canvas.webgl") ?? undefined;
 
 // Scene
 const scene = new T.Scene();
@@ -83,7 +83,7 @@ fontLoader.load("/fonts/Fira Code_Regular.json", (font) => {
 
   console.time("donuts");
 
-  const donutGeom = new T.TorusBufferGeometry(0.3, 0.2, 20, 45);
+  const donutGeom = new T.TorusGeometry(0.3, 0.2, 20, 45);
 
   for (let i = 0; i < 500; i++) {
     const donut = new T.Mesh(donutGeom, mainMaterial);
@@ -141,7 +141,7 @@ camera.position.z = 2;
 scene.add(camera);
 
 // Controls
-const controls = new OrbitControls(camera, canvas);
+const controls = new OrbitControls(camera, canvas as HTMLElement | undefined);
 controls.enableDamping = true;
 
 /**
