@@ -9,7 +9,10 @@ export default function getPages(): Record<string, string> {
   );
 
   const pageConfig = Object.fromEntries(
-    pages.map((page) => [page, resolve(__dirname, `${page}/index.html`)])
+    pages.map((page) => [
+      page.replace(`${basePagesPath}/`, ""),
+      resolve(__dirname, `${page}/index.html`),
+    ])
   );
 
   return pageConfig;

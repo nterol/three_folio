@@ -6,6 +6,8 @@ import getPages from "./get-pages";
 
 const pages = getPages();
 
+console.log(pages);
+
 const content = `
 <!DOCTYPE html>
 <html lang="en">
@@ -25,9 +27,7 @@ const content = `
           `<a class="link" href="${pages[page].replace(
             __dirname,
             "http://127.0.0.1:5173"
-          )}">${page
-            .replace(`${__dirname}/pages/`, "")
-            .replaceAll("-", " ")}</a>`
+          )}">${page.replaceAll("-", " ")}</a>`
       )
       .join("")}
       </div></section>
