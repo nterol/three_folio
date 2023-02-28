@@ -1,5 +1,4 @@
 import * as T from "three";
-import { SplineCurve } from "three";
 
 export const params = {
   count: 100_000,
