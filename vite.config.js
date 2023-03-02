@@ -6,8 +6,6 @@ import getPages from "./get-pages";
 
 const pages = getPages();
 
-console.log(pages);
-
 const content = `
 <!DOCTYPE html>
 <html lang="en">

@@ -180,7 +180,13 @@ function intersectionCallback(index) {
     const [entry] = entries;
     if (entry.isIntersecting) {
       console.log(sections[index].textContent);
-      sectionMeshes[index].rotation.y += 120;
+      gsap.to(sectionMeshes[index].rotation, {
+        duration: 1.5,
+        ease: "power2.inOut",
+        x: "+=6",
+        y: "+=3",
+        z: "+=1.5",
+      });
     }
   };
 }
@@ -213,8 +219,8 @@ const tick = () => {
 
   // Mesh animation
   for (let mesh of sectionMeshes) {
-    mesh.rotation.x = elapsedTime * 0.1;
-    mesh.rotation.y = elapsedTime * 0.12;
+    mesh.rotation.x += deltaTime * 0.1;
+    mesh.rotation.y += deltaTime * 0.12;
   }
 
   // Render
