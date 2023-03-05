@@ -1,6 +1,9 @@
-import * as THREE from "three";
+import * as T from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
+import world, { sphereBody } from "./world";
+
+// import world, { sphereBody } from "./world";
 
 /**
  * Debug
@@ -14,29 +17,29 @@ const gui = new dat.GUI();
 const canvas = document.querySelector("canvas.webgl");
 
 // Scene
-const scene = new THREE.Scene();
+const scene = new T.Scene();
 
 /**
  * Textures
  */
-const textureLoader = new THREE.TextureLoader();
-const cubeTextureLoader = new THREE.CubeTextureLoader();
+const textureLoader = new T.TextureLoader();
+const cubeTextureLoader = new T.CubeTextureLoader();
 
 const environmentMapTexture = cubeTextureLoader.load([
-  "/textures/environmentMaps/0/px.png",
-  "/textures/environmentMaps/0/nx.png",
-  "/textures/environmentMaps/0/py.png",
-  "/textures/environmentMaps/0/ny.png",
-  "/textures/environmentMaps/0/pz.png",
-  "/textures/environmentMaps/0/nz.png",
+  "/21-physics/textures/environmentMaps/0/px.png",
+  "/21-physics/textures/environmentMaps/0/nx.png",
+  "/21-physics/textures/environmentMaps/0/py.png",
+  "/21-physics/textures/environmentMaps/0/ny.png",
+  "/21-physics/textures/environmentMaps/0/pz.png",
+  "/21-physics/textures/environmentMaps/0/nz.png",
 ]);
 
 /**
  * Test sphere
  */
-const sphere = new THREE.Mesh(
-  new THREE.SphereGeometry(0.5, 32, 32),
-  new THREE.MeshStandardMaterial({
+const sphere = new T.Mesh(
+  new T.SphereGeometry(0.5, 32, 32),
+  new T.MeshStandardMaterial({
     metalness: 0.3,
     roughness: 0.4,
     envMap: environmentMapTexture,
@@ -50,9 +53,9 @@ scene.add(sphere);
 /**
  * Floor
  */
-const floor = new THREE.Mesh(
-  new THREE.PlaneGeometry(10, 10),
-  new THREE.MeshStandardMaterial({
+const floor = new T.Mesh(
+  new T.PlaneGeometry(10, 10),
+  new T.MeshStandardMaterial({
     color: "#777777",
     metalness: 0.3,
     roughness: 0.4,
@@ -67,10 +70,10 @@ scene.add(floor);
 /**
  * Lights
  */
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+const ambientLight = new T.AmbientLight(0xffffff, 0.7);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.2);
+const directionalLight = new T.DirectionalLight(0xffffff, 0.2);
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.set(1024, 1024);
 directionalLight.shadow.camera.far = 15;
@@ -107,7 +110,7 @@ window.addEventListener("resize", () => {
  * Camera
  */
 // Base camera
-const camera = new THREE.PerspectiveCamera(
+const camera = new T.PerspectiveCamera(
   75,
   sizes.width / sizes.height,
   0.1,
@@ -123,21 +126,28 @@ controls.enableDamping = true;
 /**
  * Renderer
  */
-const renderer = new THREE.WebGLRenderer({
+const renderer = new T.WebGLRenderer({
   canvas: canvas,
 });
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.type = T.PCFSoftShadowMap;
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 /**
  * Animate
  */
-const clock = new THREE.Clock();
-
+const clock = new T.Clock();
+let formerElapsedTime = 0;
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+  const deltaTime = elapsedTime - formerElapsedTime;
+  formerElapsedTime = elapsedTime;
+
+  //Physic World
+  world.step(1 / 60, deltaTime, 3);
+
+  sphere.position.copy(sphereBody.position as any);
 
   // Update controls
   controls.update();
