@@ -4,7 +4,20 @@ import environmentMapTexture from "./textures";
 import scene from "./scene";
 import world from "./world";
 
-export const objectManager = [];
+export const objectManager: Array<{
+  mesh: Mesh<SphereGeometry | BoxGeometry, MeshStandardMaterial>;
+  body: Body;
+  type: "box" | "sphere";
+}> = [];
+
+const hitSound = new Audio("/21-physics/sounds/hit.mp3");
+export function playHitSound(collision) {
+  const impactStrengh = collision.contact.getImpactVelocityAlongNormal();
+  if (impactStrengh <= 1.5) return;
+  //   hitSound.volume = impactStrengh * 0.1;
+  hitSound.currentTime = 0;
+  hitSound.play();
+}
 
 const geometry = new SphereGeometry(1, 20, 20);
 const material = new MeshStandardMaterial({
@@ -28,6 +41,7 @@ export function createSphere(radius: number, position: any) {
   });
 
   body.position.copy(position);
+  body.addEventListener("collide", playHitSound);
   objectManager.push({
     mesh,
     body,
@@ -44,7 +58,6 @@ export function createBox(
   depth: number,
   position
 ) {
-  console.log("BOX");
   const mesh = new Mesh(boxGeometry, material);
   mesh.scale.set(width, height, depth);
   mesh.castShadow = true;
@@ -59,6 +72,8 @@ export function createBox(
   });
 
   body.position.copy(position);
+
+  body.addEventListener("collide", playHitSound);
   world.addBody(body);
   objectManager.push({ mesh, body, type: "box" });
 }

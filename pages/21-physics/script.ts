@@ -1,9 +1,10 @@
 import * as T from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
+
 import world from "./world";
 import scene from "./scene";
-import { createSphere, createBox, objectManager } from "./utils";
+import { createSphere, createBox, objectManager, playHitSound } from "./utils";
 import environmentMapTexture from "./textures";
 
 /**
@@ -11,24 +12,33 @@ import environmentMapTexture from "./textures";
  */
 const gui = new dat.GUI();
 const debugObject = {
-  createSphere: () => {
+  "create sphere": () => {
     createSphere(Math.random() * 0.5, {
       x: (Math.random() - 0.5) * 3,
       y: 3,
       z: (Math.random() - 0.5) * 3,
     });
   },
-  createBox: () => {
+  "create box": () => {
     createBox(Math.random() * 0.5, Math.random() * 0.5, Math.random() * 0.5, {
       x: (Math.random() - 0.5) * 3,
       y: 3,
       z: (Math.random() - 0.5) * 3,
     });
   },
+  reset: () => {
+    for (const object of objectManager) {
+      object.body.removeEventListener("collide", playHitSound);
+      world.remove(object.body);
+      scene.remove(object.mesh);
+    }
+    objectManager.splice(0, objectManager.length);
+  },
 };
 
-gui.add(debugObject, "createSphere");
-gui.add(debugObject, "createBox");
+gui.add(debugObject, "create sphere");
+gui.add(debugObject, "create box");
+gui.add(debugObject, "reset");
 
 /**
  * Base
@@ -120,8 +130,6 @@ renderer.shadowMap.type = T.PCFSoftShadowMap;
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-createSphere(0.5, { x: 0, y: 3, z: 0 });
-
 /**
  * Animate
  */
@@ -136,8 +144,8 @@ const tick = () => {
   world.step(1 / 60, deltaTime, 3);
 
   for (const o of objectManager) {
-    o.mesh.position.copy(o.body.position);
-    o.mesh.quaternion.copy(o.body.quaternion);
+    o.mesh.position.copy(o.body.position as any);
+    o.mesh.quaternion.copy(o.body.quaternion as any);
   }
 
   // Update controls

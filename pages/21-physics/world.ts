@@ -3,12 +3,11 @@ import * as C from "cannon";
 /** World */
 const world = new C.World();
 world.gravity.set(0, -9.82, 0);
+world.allowSleep = true;
+world.broadphase = new C.SAPBroadphase(world);
 
 /** Materials */
-// const concreteMaterial = new C.Material("concrete");
-// const plasticMaterial = new C.Material("plastic");
 const defaultMaterial = new C.Material("default");
-
 const defaultContactMaterial = new C.ContactMaterial(
   defaultMaterial,
   defaultMaterial,
