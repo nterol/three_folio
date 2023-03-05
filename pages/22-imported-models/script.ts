@@ -1,6 +1,9 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
+// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+
 import scene from "./scene";
 import { ambientLight, directionalLight } from "./lights";
 import sizes from "./sizes";
@@ -14,6 +17,43 @@ const gui = new dat.GUI();
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
+
+const handleSuccess = (gltf) => {
+  while (gltf.scene.children.length) {
+    scene.add(gltf.scene.children[0]);
+  }
+};
+
+const handleProgress = (e) => {
+  console.log(console.log("progress", e));
+};
+const handleError = (e) => {
+  console.log(console.log("GLTF error", e));
+};
+
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath("/22-imported-models/draco");
+// const gltfLoader = new GLTFLoader();
+// gltfLoader.load(
+//   "/22-imported-models/models/Duck/glTF/Duck.gltf",
+//   handleSuccess,
+//   handleProgress,
+//   handleError
+// );
+
+// gltfLoader.load(
+//   "/22-imported-models/models/FlightHelmet/glTF/FlightHelmet.gltf",
+//   handleSuccess,
+//   handleProgress,
+//   handleError
+// );
+
+// dracoLoader.load(
+//   "/22-imported-models/models/Duck/glTF-Draco/Duck.gltf",
+//   handleSuccess,
+//   handleProgress,
+//   handleError
+// );
 
 /**
  * Floor
