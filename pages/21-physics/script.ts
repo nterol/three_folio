@@ -1,54 +1,40 @@
 import * as T from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
-import world, { sphereBody } from "./world";
-
-// import world, { sphereBody } from "./world";
+import world from "./world";
+import scene from "./scene";
+import { createSphere, createBox, objectManager } from "./utils";
+import environmentMapTexture from "./textures";
 
 /**
  * Debug
  */
 const gui = new dat.GUI();
+const debugObject = {
+  createSphere: () => {
+    createSphere(Math.random() * 0.5, {
+      x: (Math.random() - 0.5) * 3,
+      y: 3,
+      z: (Math.random() - 0.5) * 3,
+    });
+  },
+  createBox: () => {
+    createBox(Math.random() * 0.5, Math.random() * 0.5, Math.random() * 0.5, {
+      x: (Math.random() - 0.5) * 3,
+      y: 3,
+      z: (Math.random() - 0.5) * 3,
+    });
+  },
+};
+
+gui.add(debugObject, "createSphere");
+gui.add(debugObject, "createBox");
 
 /**
  * Base
  */
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
-
-// Scene
-const scene = new T.Scene();
-
-/**
- * Textures
- */
-const textureLoader = new T.TextureLoader();
-const cubeTextureLoader = new T.CubeTextureLoader();
-
-const environmentMapTexture = cubeTextureLoader.load([
-  "/21-physics/textures/environmentMaps/0/px.png",
-  "/21-physics/textures/environmentMaps/0/nx.png",
-  "/21-physics/textures/environmentMaps/0/py.png",
-  "/21-physics/textures/environmentMaps/0/ny.png",
-  "/21-physics/textures/environmentMaps/0/pz.png",
-  "/21-physics/textures/environmentMaps/0/nz.png",
-]);
-
-/**
- * Test sphere
- */
-const sphere = new T.Mesh(
-  new T.SphereGeometry(0.5, 32, 32),
-  new T.MeshStandardMaterial({
-    metalness: 0.3,
-    roughness: 0.4,
-    envMap: environmentMapTexture,
-    envMapIntensity: 0.5,
-  })
-);
-sphere.castShadow = true;
-sphere.position.y = 0.5;
-scene.add(sphere);
 
 /**
  * Floor
@@ -134,6 +120,8 @@ renderer.shadowMap.type = T.PCFSoftShadowMap;
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+createSphere(0.5, { x: 0, y: 3, z: 0 });
+
 /**
  * Animate
  */
@@ -147,7 +135,10 @@ const tick = () => {
   //Physic World
   world.step(1 / 60, deltaTime, 3);
 
-  sphere.position.copy(sphereBody.position as any);
+  for (const o of objectManager) {
+    o.mesh.position.copy(o.body.position);
+    o.mesh.quaternion.copy(o.body.quaternion);
+  }
 
   // Update controls
   controls.update();
