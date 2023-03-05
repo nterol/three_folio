@@ -1,4 +1,4 @@
-import { Body, Box, Sphere, Vec3 } from "cannon";
+import { Body, Box, Sphere, Vec3 } from "cannon-es";
 import { BoxGeometry, Mesh, MeshStandardMaterial, SphereGeometry } from "three";
 import environmentMapTexture from "./textures";
 import scene from "./scene";

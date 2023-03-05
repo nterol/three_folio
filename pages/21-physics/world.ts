@@ -1,4 +1,4 @@
-import * as C from "cannon";
+import * as C from "cannon-es";
 
 /** World */
 const world = new C.World();

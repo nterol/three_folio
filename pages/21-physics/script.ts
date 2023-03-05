@@ -29,7 +29,7 @@ const debugObject = {
   reset: () => {
     for (const object of objectManager) {
       object.body.removeEventListener("collide", playHitSound);
-      world.remove(object.body);
+      world.removeBody(object.body);
       scene.remove(object.mesh);
     }
     objectManager.splice(0, objectManager.length);
