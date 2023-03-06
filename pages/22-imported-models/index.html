@@ -11,9 +11,31 @@
   <body>
     <a
       href="/"
-      class="z-10 fixed top-8 left-8 w-8 h-8 p-2 rounded-lg bg-purple-500 text-white flex justify-center items-center back-button bg-blue"
+      class="z-10 fixed top-8 left-8 w-8 h-8 p-2 rounded-lg bg-purple-500 text-white flex justify-center items-center back-button"
       >&larr;</a
     >
+
+    <div class="z-10 fixed top-20 left-8 flex gap-4">
+      <button
+        role="button"
+        class="p-2 rounded-lg bg-purple-500 text-white flex justify-center items-center back-button disabled:bg-purple-300 disabled:text-slate-600 disabled:cursor-not-allowed cursor-pointer"
+        id="animation-button"
+      >
+        search</button
+      ><button
+        role="button"
+        class="p-2 rounded-lg bg-purple-500 text-white flex justify-center items-center back-button disabled:bg-purple-300 disabled:text-slate-600 disabled:cursor-not-allowed cursor-pointer"
+        id="animation-button"
+      >
+        walk</button
+      ><button
+        role="button"
+        class="p-2 rounded-lg bg-purple-500 text-white flex justify-center items-center back-button disabled:bg-purple-300 disabled:text-slate-600 disabled:cursor-not-allowed cursor-pointer"
+        id="animation-button"
+      >
+        run
+      </button>
+    </div>
     <canvas class="webgl"></canvas>
     <script type="module" src="script.ts"></script>
   </body>

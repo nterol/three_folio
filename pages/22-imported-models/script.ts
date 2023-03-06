@@ -1,13 +1,14 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
-// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { GLTFLoader, GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 import scene from "./scene";
 import { ambientLight, directionalLight } from "./lights";
 import sizes from "./sizes";
 import camera from "./camera";
+import { AnimationAction, AnimationClip, AnimationMixer } from "three";
 
 /**
  * Base
@@ -17,12 +18,38 @@ const gui = new dat.GUI();
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
+let mixer: AnimationMixer | undefined = undefined;
+const actions: AnimationAction[] = [];
+let currentAction = 0;
 
-const handleSuccess = (gltf) => {
-  while (gltf.scene.children.length) {
-    scene.add(gltf.scene.children[0]);
+const animationButtons = document.querySelectorAll("#animation-button");
+const handleSuccess = (gltf: GLTF) => {
+  gltf.scene.scale.set(0.025, 0.025, 0.025);
+  mixer = new AnimationMixer(gltf.scene);
+
+  for (const animation of gltf.animations) {
+    actions.push(mixer.clipAction(animation));
   }
+
+  actions[currentAction].play();
+  // animationButtons[0].setAttribute("disabled", "true");
+  // while (gltf.scene.children.length) {
+  //     gltf.scene.children.
+  //   }
+  scene.add(gltf.scene);
+
+  // scaling does not work with this solution
 };
+
+animationButtons.forEach((button, i) => {
+  button.addEventListener("click", () => {
+    if (actions.length) {
+      actions[currentAction].stop();
+      currentAction = i;
+      actions[i].play();
+    }
+  });
+});
 
 const handleProgress = (e) => {
   console.log(console.log("progress", e));
@@ -32,28 +59,16 @@ const handleError = (e) => {
 };
 
 const dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath("/22-imported-models/draco");
-// const gltfLoader = new GLTFLoader();
-// gltfLoader.load(
-//   "/22-imported-models/models/Duck/glTF/Duck.gltf",
-//   handleSuccess,
-//   handleProgress,
-//   handleError
-// );
+dracoLoader.setDecoderPath("/22-imported-models/draco/");
+const gltfLoader = new GLTFLoader();
+gltfLoader.setDRACOLoader(dracoLoader);
 
-// gltfLoader.load(
-//   "/22-imported-models/models/FlightHelmet/glTF/FlightHelmet.gltf",
-//   handleSuccess,
-//   handleProgress,
-//   handleError
-// );
-
-// dracoLoader.load(
-//   "/22-imported-models/models/Duck/glTF-Draco/Duck.gltf",
-//   handleSuccess,
-//   handleProgress,
-//   handleError
-// );
+gltfLoader.load(
+  "/22-imported-models/models/Fox/glTF/Fox.gltf",
+  handleSuccess,
+  handleProgress,
+  handleError
+);
 
 /**
  * Floor
@@ -130,6 +145,9 @@ const tick = () => {
 
   // Update controls
   controls.update();
+
+  // Action mixer
+  if (mixer) mixer.update(deltaTime);
 
   // Render
   renderer.render(scene, camera);

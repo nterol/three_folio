@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 .back-button {
-  box-shadow: 0px 0px 0px theme("colors.blue.500");
+  box-shadow: 0px 0px 0px theme("colors.purple.200");
   transition: all 0.1s ease;
 }
 
-.back-button:hover {
-  box-shadow: 4px 4px 0px theme("colors.blue.500");
+.back-button:hover:enabled {
+  box-shadow: 5px 5px 0px theme("colors.purple.200");
 }
