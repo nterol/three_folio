@@ -8,7 +8,7 @@ import scene from "./scene";
 import { ambientLight, directionalLight } from "./lights";
 import sizes from "./sizes";
 import camera from "./camera";
-import { AnimationAction, AnimationClip, AnimationMixer } from "three";
+import { AnimationAction, AnimationMixer } from "three";
 
 /**
  * Base
@@ -24,6 +24,7 @@ let currentAction = 0;
 
 const animationButtons = document.querySelectorAll("#animation-button");
 const handleSuccess = (gltf: GLTF) => {
+  scene.add(gltf.scene);
   gltf.scene.scale.set(0.025, 0.025, 0.025);
   mixer = new AnimationMixer(gltf.scene);
 
@@ -31,22 +32,26 @@ const handleSuccess = (gltf: GLTF) => {
     actions.push(mixer.clipAction(animation));
   }
 
+  animationButtons[currentAction].setAttribute("data-active", "true");
   actions[currentAction].play();
   // animationButtons[0].setAttribute("disabled", "true");
   // while (gltf.scene.children.length) {
   //     gltf.scene.children.
   //   }
-  scene.add(gltf.scene);
 
   // scaling does not work with this solution
 };
 
 animationButtons.forEach((button, i) => {
   button.addEventListener("click", () => {
+    animationButtons[currentAction].setAttribute("data-active", "false");
     if (actions.length) {
       actions[currentAction].stop();
+      if (currentAction === i) return;
+
       currentAction = i;
       actions[i].play();
+      animationButtons[currentAction].setAttribute("data-active", "true");
     }
   });
 });

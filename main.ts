@@ -1,5 +1,24 @@
 import "./style.css";
+import "./global.css";
+// import getPages from "./get-pages";
 // import javascriptLogo from "./javascript.svg";
+
+// const pages = getPages();
+
+// console.log({ pages });
+
+// document.querySelector("#link-list").innerHTML = `
+// ${Object.keys(pages)
+
+//   .map(
+//     (page) =>
+//       `<a class="link" href="${pages[page].replace(
+//         __dirname,
+//         "http://127.0.0.1:5173"
+//       )}">${page.replaceAll("-", " ")}</a>`
+//   )
+//   .join("")}
+// `;
 
 // document.querySelector("#app").innerHTML = `
 //   <div>

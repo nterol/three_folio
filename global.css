@@ -7,6 +7,6 @@
   transition: all 0.1s ease;
 }
 
-.back-button:hover:enabled {
+.back-button:hover {
   box-shadow: 5px 5px 0px theme("colors.purple.200");
 }
