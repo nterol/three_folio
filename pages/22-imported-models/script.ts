@@ -64,7 +64,7 @@ const handleError = (e) => {
 };
 
 const dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath("/22-imported-models/draco/");
+dracoLoader.setDecoderPath("/draco/");
 const gltfLoader = new GLTFLoader();
 gltfLoader.setDRACOLoader(dracoLoader);
 
