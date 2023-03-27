@@ -5,7 +5,7 @@ import { GLTFLoader, GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 import scene from "./scene";
-import { ambientLight, directionalLight } from "./lights";
+import { ambientLight, directionalLight } from "../../src/lights";
 import sizes from "./sizes";
 import camera from "./camera";
 import { AnimationAction, AnimationMixer } from "three";
@@ -69,7 +69,7 @@ const gltfLoader = new GLTFLoader();
 gltfLoader.setDRACOLoader(dracoLoader);
 
 gltfLoader.load(
-  "/22-imported-models/models/Fox/glTF/Fox.gltf",
+  "/models/Fox/glTF/Fox.gltf",
   handleSuccess,
   handleProgress,
   handleError
