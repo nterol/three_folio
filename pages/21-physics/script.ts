@@ -3,9 +3,10 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
 
 import world from "./world";
-import scene from "./scene";
+
 import { createSphere, createBox, objectManager, playHitSound } from "./utils";
 import environmentMapTexture from "./textures";
+import scene from "@/modules/scene";
 
 /**
  * Debug
