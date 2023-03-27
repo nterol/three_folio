@@ -1,5 +1,5 @@
 import { writeFileSync } from "fs";
-import { resolve } from "path";
+import path, { resolve } from "path";
 
 import { defineConfig } from "vite";
 import getPages from "./get-pages";
@@ -44,6 +44,11 @@ const content = `
 writeFileSync(resolve(__dirname, "index.html"), content);
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
   server: { open: true },
   build: {
     manifest: true,

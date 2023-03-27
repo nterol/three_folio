@@ -3,7 +3,8 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { ambientLight, directionalLight } from "../../src/lights";
+import { ambientLight, directionalLight } from "@/modules/lights";
+import scene from "@/modules/scene";
 
 /**
  * Base
@@ -15,7 +16,6 @@ const gui = new dat.GUI();
 const canvas = document.querySelector("canvas.webgl");
 
 // Scene
-const scene = new THREE.Scene();
 
 /**
  * Objects
@@ -215,9 +215,8 @@ const tick = () => {
   // Find the duck
   if (model !== null) {
     const modelIntersect = raycaster.intersectObject(model);
-    if (modelIntersect.length) {
-      console.log(modelIntersect);
-    }
+    const scale = modelIntersect.length ? 1.2 : 1;
+    model.scale.set(scale, scale, scale);
   }
 
   // Update controls
