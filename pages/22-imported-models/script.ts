@@ -6,9 +6,10 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 import scene from "@/modules/scene";
 import { ambientLight, directionalLight } from "@/modules/lights";
-import sizes from "./sizes";
+
 import camera from "./camera";
 import { AnimationAction, AnimationMixer } from "three";
+import { sizes } from "@/modules/from-html";
 
 /**
  * Base

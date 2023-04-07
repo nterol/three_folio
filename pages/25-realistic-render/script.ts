@@ -1,35 +1,39 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import * as dat from "lil-gui";
+
+import scene from "@/modules/scene";
+import { sun } from "./lights";
+import { canvas, sizes } from "@/modules/from-html";
+import { renderer } from "./renderer";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { handleSuccess } from "./model-loader";
+import environmentMapTexture from "./environentMap-loader";
+import gui from "@/modules/gui";
+import { debugObject } from "./debug-object";
+import updateAllMaterials from "./updateMaterials";
 
 /**
  * Base
  */
-// Debug
-const gui = new dat.GUI();
-
-// Canvas
-const canvas = document.querySelector("canvas.webgl");
-
-// Scene
-const scene = new THREE.Scene();
 
 /**
- * Test sphere
+ * Loaders
  */
-const testSphere = new THREE.Mesh(
-  new THREE.SphereGeometry(1, 32, 32),
-  new THREE.MeshBasicMaterial()
-);
-scene.add(testSphere);
+const gltfLoader = new GLTFLoader();
 
-/**
- * Sizes
- */
-const sizes = {
-  width: window.innerWidth,
-  height: window.innerHeight,
-};
+gltfLoader.load("/models/FlightHelmet/glTF/FlightHelmet.gltf", handleSuccess);
+
+scene.background = environmentMapTexture;
+scene.environment = environmentMapTexture;
+
+gui
+  .add(debugObject, "envMapIntensity")
+  .min(0)
+  .max(10)
+  .step(0.001)
+  .onChange(updateAllMaterials);
+
+scene.add(sun);
 
 window.addEventListener("resize", () => {
   // Update sizes
@@ -61,15 +65,6 @@ scene.add(camera);
 // Controls
 const controls = new OrbitControls(camera, canvas as any);
 controls.enableDamping = true;
-
-/**
- * Renderer
- */
-const renderer = new THREE.WebGLRenderer({
-  canvas: canvas,
-});
-renderer.setSize(sizes.width, sizes.height);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 /**
  * Animate

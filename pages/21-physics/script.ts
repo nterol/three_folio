@@ -4,9 +4,10 @@ import * as dat from "lil-gui";
 
 import world from "./world";
 
-import { createSphere, createBox, objectManager, playHitSound } from "./utils";
+import { createSphere, createBox, objectManager } from "./utils";
 import environmentMapTexture from "./textures";
 import scene from "@/modules/scene";
+import { playHitSound } from "./hitSound";
 
 /**
  * Debug

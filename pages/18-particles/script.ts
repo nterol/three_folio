@@ -19,9 +19,7 @@ const scene = new T.Scene();
  * Textures
  */
 const textureLoader = new T.TextureLoader();
-const particlesTexture = textureLoader.load(
-  "/textures/particles/1.png"
-);
+const particlesTexture = textureLoader.load("/textures/particles/1.png");
 
 /**
  * Particules
@@ -98,7 +96,7 @@ camera.position.z = 3;
 scene.add(camera);
 
 // Controls
-const controls = new OrbitControls(camera, canvas);
+const controls = new OrbitControls(camera, canvas as any);
 controls.enableDamping = true;
 
 /**

@@ -1,23 +1,16 @@
 import { Body, Box, Sphere, Vec3 } from "cannon-es";
 import { BoxGeometry, Mesh, MeshStandardMaterial, SphereGeometry } from "three";
 import environmentMapTexture from "./textures";
-import scene from "./scene";
+
 import world from "./world";
+import scene from "@/modules/scene";
+import { playHitSound } from "./hitSound";
 
 export const objectManager: Array<{
   mesh: Mesh<SphereGeometry | BoxGeometry, MeshStandardMaterial>;
   body: Body;
   type: "box" | "sphere";
 }> = [];
-
-const hitSound = new Audio("/21-physics/sounds/hit.mp3");
-export function playHitSound(collision) {
-  const impactStrengh = collision.contact.getImpactVelocityAlongNormal();
-  if (impactStrengh <= 1.5) return;
-  //   hitSound.volume = impactStrengh * 0.1;
-  hitSound.currentTime = 0;
-  hitSound.play();
-}
 
 const geometry = new SphereGeometry(1, 20, 20);
 const material = new MeshStandardMaterial({

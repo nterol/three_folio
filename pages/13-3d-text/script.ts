@@ -4,7 +4,7 @@ import * as T from "three";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import * as dat from "lil-gui";
+import { canvas, sizes } from "@/modules/from-html";
 
 // preloadFont(
 //   {
@@ -18,11 +18,6 @@ import * as dat from "lil-gui";
 /**
  * Base
  */
-// Debug
-const gui = new dat.GUI();
-
-// Canvas
-const canvas = document.querySelector("canvas.webgl") ?? undefined;
 
 // Scene
 const scene = new T.Scene();
@@ -102,14 +97,6 @@ fontLoader.load("/fonts/Fira Code_Regular.json", (font) => {
   }
   console.timeEnd("donuts");
 });
-
-/**
- * Sizes
- */
-const sizes = {
-  width: window.innerWidth,
-  height: window.innerHeight,
-};
 
 window.addEventListener("resize", () => {
   // Update sizes
