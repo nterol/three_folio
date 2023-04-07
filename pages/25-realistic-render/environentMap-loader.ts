@@ -1,4 +1,4 @@
-import { CubeTextureLoader } from "three";
+import { CubeTextureLoader, sRGBEncoding } from "three";
 import { debugObject } from "./debug-object";
 import gui from "@/modules/gui";
 import updateAllMaterials from "./updateMaterials";
@@ -12,5 +12,6 @@ const environmentMapTexture = cubeTextureLoader.load([
   "/textures/environmentMaps/1_0/pz.jpg",
   "/textures/environmentMaps/1_0/nz.jpg",
 ]);
+environmentMapTexture.encoding = sRGBEncoding;
 
 export default environmentMapTexture;
