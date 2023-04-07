@@ -20,7 +20,7 @@ const scene = new T.Scene();
  */
 const textureLoader = new T.TextureLoader();
 const particlesTexture = textureLoader.load(
-  "/18-particles/textures/particles/1.png"
+  "/textures/particles/1.png"
 );
 
 /**
