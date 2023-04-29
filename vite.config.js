@@ -18,6 +18,9 @@ const content = `
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Three folio</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./global.css" />
+  
   </head>
   <body>
     <section class="flex justify-center items-center w-full">
@@ -35,8 +38,6 @@ const content = `
       )
       .join("")}
       </div></section>
-    <script type="module" src="http://localhost:5173/main.ts"></script>
-
   </body>
 </html>
 `;

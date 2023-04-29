@@ -11,6 +11,7 @@ import environmentMapTexture from "./environentMap-loader";
 import gui from "@/modules/gui";
 import { debugObject } from "./debug-object";
 import updateAllMaterials from "./updateMaterials";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 /**
  * Base
@@ -19,9 +20,14 @@ import updateAllMaterials from "./updateMaterials";
 /**
  * Loaders
  */
-const gltfLoader = new GLTFLoader();
 
-gltfLoader.load("/models/FlightHelmet/glTF/FlightHelmet.gltf", handleSuccess);
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath("/draco/");
+
+const gltfLoader = new GLTFLoader();
+gltfLoader.setDRACOLoader(dracoLoader);
+
+gltfLoader.load("/models/Hamburger/hamburger.glb", handleSuccess);
 
 scene.background = environmentMapTexture;
 scene.environment = environmentMapTexture;

@@ -5,6 +5,7 @@ import {
   CineonToneMapping,
   LinearToneMapping,
   NoToneMapping,
+  PCFSoftShadowMap,
   ReinhardToneMapping,
   WebGLRenderer,
   sRGBEncoding,
@@ -15,12 +16,15 @@ import {
  */
 export const renderer = new WebGLRenderer({
   canvas,
+  // antialias: true,
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.physicallyCorrectLights = true;
 renderer.outputEncoding = sRGBEncoding;
-renderer.toneMapping = ACESFilmicToneMapping;
+renderer.toneMapping = ReinhardToneMapping;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = PCFSoftShadowMap;
 
 gui.add(renderer, "toneMapping", {
   No: NoToneMapping,

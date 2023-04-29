@@ -5,8 +5,8 @@ import updateAllMaterials from "./updateMaterials";
 
 /* Models */
 export const handleSuccess = (gltf: GLTF) => {
-  gltf.scene.scale.set(10, 10, 10);
-  gltf.scene.position.set(0, -4, 0);
+  gltf.scene.scale.set(0.5, 0.5, 0.5);
+  gltf.scene.position.set(0, 0, 0);
   gltf.scene.rotation.y = Math.PI * 0.5;
   scene.add(gltf.scene);
 

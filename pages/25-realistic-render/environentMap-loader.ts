@@ -1,7 +1,7 @@
 import { CubeTextureLoader, sRGBEncoding } from "three";
-import { debugObject } from "./debug-object";
-import gui from "@/modules/gui";
-import updateAllMaterials from "./updateMaterials";
+// import { debugObject } from "./debug-object";
+// import gui from "@/modules/gui";
+// import updateAllMaterials from "./updateMaterials";
 
 export const cubeTextureLoader = new CubeTextureLoader();
 const environmentMapTexture = cubeTextureLoader.load([
