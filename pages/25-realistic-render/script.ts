@@ -1,3 +1,5 @@
+import "@/styles/global.css";
+import "@/styles/canvas.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
@@ -12,6 +14,7 @@ import gui from "@/modules/gui";
 import { debugObject } from "./debug-object";
 import updateAllMaterials from "./updateMaterials";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+import useResize from "@/modules/use-resize";
 
 /**
  * Base
@@ -41,20 +44,6 @@ gui
 
 scene.add(sun);
 
-window.addEventListener("resize", () => {
-  // Update sizes
-  sizes.width = window.innerWidth;
-  sizes.height = window.innerHeight;
-
-  // Update camera
-  camera.aspect = sizes.width / sizes.height;
-  camera.updateProjectionMatrix();
-
-  // Update renderer
-  renderer.setSize(sizes.width, sizes.height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-});
-
 /**
  * Camera
  */
@@ -67,6 +56,8 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.set(4, 1, -4);
 scene.add(camera);
+
+useResize({ renderer, camera });
 
 // Controls
 const controls = new OrbitControls(camera, canvas as any);

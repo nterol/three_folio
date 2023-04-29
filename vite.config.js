@@ -1,5 +1,6 @@
 import { writeFileSync } from "fs";
 import path, { resolve } from "path";
+import glsl from "vite-plugin-glsl";
 
 import { defineConfig } from "vite";
 import getPages from "./get-pages";
@@ -18,8 +19,8 @@ const content = `
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Three folio</title>
-    <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./src/styles/index.css" />
+    <link rel="stylesheet" href="./src/styles/global.css" />
   
   </head>
   <body>
@@ -60,4 +61,5 @@ export default defineConfig({
       },
     },
   },
+  plugins: [glsl({ watch: true, compress: true })],
 });
