@@ -129,7 +129,7 @@ scene.add(camera);
 
 // Controls
 
-const controls = new OrbitControls(camera, canvas);
+const controls = new OrbitControls(camera, canvas as any);
 controls.enableDamping = true;
 
 /**

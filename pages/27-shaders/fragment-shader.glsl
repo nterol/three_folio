@@ -1,5 +1,9 @@
-precision mediump float;
+uniform sampler2D uTexture;
+varying vec2 v_uv;
+varying float v_elevation;
 
 void main() {
-    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    vec4 textureColor = texture2D(uTexture, v_uv);
+    textureColor.rgb *= v_elevation * 2.0 + 0.9;
+    gl_FragColor = textureColor;
 }

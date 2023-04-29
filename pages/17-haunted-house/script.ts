@@ -154,9 +154,10 @@ const scales = [
 ];
 const bushes = Array.from({ length: 4 }, (_, i) => {
   const bush = new T.Mesh(bushGeometry, bushMaterial);
-
-  bush.scale.set(...scales[i]);
-  bush.position.set(...positions[i]);
+  const [x, y, z] = scales[i];
+  const [px, py, pz] = positions[i];
+  bush.scale.set(x, y, z);
+  bush.position.set(px, py, pz);
   bush.castShadow = true;
   bush.geometry.setAttribute(
     "uv2",
